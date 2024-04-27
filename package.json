@@ -1,0 +1,50 @@
+{
+  "name": "@tontile/autoframe",
+  "version": "0.0.1",
+  "author": "TonTile Corporation Ltd <hello@tontile.io>",
+  "repository": "tontile/autoframe",
+  "bugs": "https://github.com/tontile/autoframe/issues",
+  "private": false,
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "license": "MIT",
+  "scripts": {
+    "lint": "echo 'Not implemented'",
+    "build": "rm -rf dist && tsup index.ts",
+    "prepare": "yarn build",
+    "format:check": "prettier --check \"**/*.{ts,tsx,md,mdx}\"",
+    "format": "prettier --write \"**/*.{ts,tsx,md,mdx}\"",
+    "release": "yarn release:prepare && yarn changelog && yarn release-commit",
+    "release:prepare": "git fetch --tags && conventional-recommended-bump -p angular | xargs yarn version:auto $1",
+    "release:canary": "yarn release:prepare && node scripts/get-unstable-version canary | xargs yarn version:auto $1",
+    "release-commit": "git add -u && git commit -m \"release: v${npm_package_version}\"",
+    "test": "jest --passWithNoTests",
+    "version:auto": "yarn version --no-git-tag-version --new-version $1",
+    "changelog": "node scripts/create-changelog"
+  },
+  "files": [
+    "dist"
+  ],
+  "devDependencies": {
+    "@types/react": "^18.2.0",
+    "@types/react-dom": "^18.2.0",
+    "conventional-recommended-bump": "^6.0.5",
+    "jest": "^29.6.4",
+    "jest-environment-jsdom": "^29.6.4",
+    "prettier": "^2.5.1",
+    "prop-types": "^15.8.1",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "standard-changelog": "^2.0.21",
+    "ts-jest": "^29.1.1",
+    "tsup": "^6.7.0",
+    "typescript": "^4.5.2"
+  },
+  "dependencies": {
+    "object-hash": "^3.0.0",
+    "react-frame-component": "5.2.6"
+  },
+  "peerDependencies": {
+    "react": "^17.0.0 || ^18.0.0"
+  }
+}
